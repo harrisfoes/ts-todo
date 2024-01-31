@@ -1,6 +1,8 @@
 import "./index.css";
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import Button from "./assets/Button";
+import Counter from "./components/Counter";
+import Advice from "./components/Advice";
 
 type TodoItem = {
   id: string;
@@ -9,18 +11,17 @@ type TodoItem = {
 };
 
 const App = () => {
-  const [todoList, setTodoList] = useState([]);
-  const [input, setInput] = useState<TodoItem[]>([]);
+  const [todoList, setTodoList] = useState<TodoItem[]>([]);
+  const [input, setInput] = useState<string>("");
 
-  const handleInput = (event): void => {
+  const handleInput = (event:ChangeEvent<HTMLInputElement>): void => {
     setInput(event.target.value);
+    console.log(typeof event)
+    console.log(event.target)
   };
 
-  const handleOnClick = (event) => {
-    console.log(event.target);
-    console.log("pinota");
-    console.log(input);
-    addTodoItem(input);
+  const handleOnClick = (): void => {
+    return addTodoItem(input);
   };
 
   const addTodoItem = (text: string) => {
@@ -83,7 +84,7 @@ const App = () => {
             >
               <input
                 type="checkbox"
-                name={items}
+                name={items.text + index}
                 checked={items.completed}
                 onChange={() => handleComplete(items.id)}
               />
@@ -97,6 +98,8 @@ const App = () => {
             </li>
           ))}
         </ol>
+      <Counter />
+      <Advice />
       </div>
     </main>
   );
